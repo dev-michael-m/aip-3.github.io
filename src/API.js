@@ -13,7 +13,6 @@ export const getOpenTiles = (board) => {
 }
 
 export const checkWinner = (board) => {
-    //console.log(board);
     let diag1,diag2,horz1,horz2,horz3,vert1,vert2,vert3;
     diag1 = diag2 = horz1 = horz2 = horz3 = vert1 = vert2 = vert3 = 0;
     let player1,player2;
@@ -33,7 +32,6 @@ export const checkWinner = (board) => {
         player2 = (diag1 % 9) === 6 | (diag2 % 9) === 6 | (horz1 % 9) === 6 | (horz2 % 9) === 6 | (horz3 % 9) === 6 | (vert1 % 9) === 6 | (vert2 % 9) === 6 | (vert3 % 9) === 6;
     }
     
-    //console.log({diag1,diag2,horz1,horz2,horz3,vert1,vert2,vert3})
     if(player1){
         return 1
     }else if(player2){
@@ -45,15 +43,11 @@ export const checkWinner = (board) => {
 
 export const AIMove = (board,totalWins,curPlayer,level) => {
     return new Promise(async(resolve,reject) => {
-        setTimeout(() => {            
-            // novice play
+        setTimeout(() => { 
             const open_tiles = getOpenTiles(board);
             const human = curPlayer === 1 ? 2 : 1;
             const win_ratio = parseFloat(((totalWins[`${human}`] + totalWins.draw)/totalWins.games).toFixed(2));
-            // if players win ratio is lower than 50%
-                // drop AI a level
-            // if players win ratio is equal to or higher than 75%
-                // increase AI a level
+
             if(open_tiles.length){
                 if(totalWins.games >= 2){    // player must have played at least 2 games
                     if((win_ratio < 0.75 && level === 1) || (win_ratio < 0.75 && level === 2)){  // play novice
@@ -148,7 +142,6 @@ const playAI = (cur_board, cur_player, curDepth) => {
     // iterate through all possible moves
     moves.reduce((total,move,index) => {
         if(cur_player === AI){
-            //console.log({moves});
             if(move.score >= total.score){ // maximize for AI
                 next_move = index;
                 total.score = move.score;
